@@ -42,7 +42,7 @@
       "version": 1,
       "name": "pwa-api",
       "urls": [
-        "/jokes/random?category=explicit"
+        "http://api.icndb.com/jokes/random?category=explicit"
       ],
       "cacheConfig": {
         "strategy": "freshness",
