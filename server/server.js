@@ -1,4 +1,4 @@
-/** 
+/**
 *    Date: 01 September 2018
 *    Description: Basic server start up and API expose code
 *    Version: 1.0
@@ -26,9 +26,9 @@ app.use(express.json());
 
 // API routes
 require('./routes')(app);
-app.use(express.static(path.resolve(__dirname, '../client/dist/client/')));
+app.use(express.static(path.resolve(__dirname, '../PWA-ngx/dist/')));
 app.get('*', function (req, res) {
-  res.sendFile(path.resolve(__dirname, '../client/dist/client/index.html'));
+  res.sendFile(path.resolve(__dirname, '../PWA-ngx/dist/index.html'));
   // res.end();
 });
 
