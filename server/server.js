@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
 // API routes
-require('./routes')(app);
+// require('./routes')(app);
 app.use(express.static(path.resolve(__dirname, '../PWA-ngx/dist/')));
 app.get('*', function (req, res) {
   res.sendFile(path.resolve(__dirname, '../PWA-ngx/dist/index.html'));
