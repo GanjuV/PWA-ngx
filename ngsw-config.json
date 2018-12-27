@@ -42,13 +42,13 @@
       "version": 1,
       "name": "pwa-api",
       "urls": [
-        "http://api.icndb.com/jokes/random?category=explicit"
+        "/jokes/random?category=explicit"
       ],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 20,
         "maxAge": "1h",
-        "timeout": "10s"
+        "timeout": "3s"
       }
     }
   ]
