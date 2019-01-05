@@ -4,8 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
 const routes = {
-//   quote: (c: RandomQuoteContext) => `/jokes/random?category=${c.category}`
-  quote: (c: RandomQuoteContext) => '/jokes/random'
+  quote: (c: RandomQuoteContext) => `/jokes/random?category=${c.category}`
 };
 
 export interface RandomQuoteContext {
@@ -15,8 +14,7 @@ export interface RandomQuoteContext {
 
 @Injectable()
 export class QuoteService {
-
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   getRandomQuote(context: RandomQuoteContext): Observable<string> {
     return this.httpClient
@@ -27,5 +25,4 @@ export class QuoteService {
         catchError(() => of('Error, could not load joke :-('))
       );
   }
-
 }

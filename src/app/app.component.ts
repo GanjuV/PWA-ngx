@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { TranslateService } from '@ngx-translate/core';
 import { merge } from 'rxjs';
 import { filter, map, mergeMap } from 'rxjs/operators';
+import { IonicApp, Nav } from 'ionic-angular';
 
 import { environment } from '@env/environment';
 import { Logger, I18nService } from '@app/core';
-import { SwUpdate } from '@angular/service-worker';
 
 const log = new Logger('App');
 
@@ -17,13 +17,15 @@ const log = new Logger('App');
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  @ViewChild(Nav) nav: Nav;
 
-  constructor(private router: Router,
-              private activatedRoute: ActivatedRoute,
-              private titleService: Title,
-              private translateService: TranslateService,
-              private i18nService: I18nService,
-              private update: SwUpdate) { }
+  constructor(
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private titleService: Title,
+    private translateService: TranslateService,
+    private i18nService: I18nService
+  ) {}
 
   ngOnInit() {
     // Setup logger
@@ -32,7 +34,6 @@ export class AppComponent implements OnInit {
     }
 
     log.debug('init');
-
 
     // Setup translations
     this.i18nService.init(environment.defaultLanguage, environment.supportedLanguages);
@@ -59,12 +60,18 @@ export class AppComponent implements OnInit {
         }
       });
 
-    this.update.available.subscribe(event => {
-      const changelog = event.available.appData['changelog'];
-      if (confirm(`${changelog} press OK to refresh`)) {
-        window.location.reload();
-      }
-    });
+    // Bind Ionic navigation to Angular router events
+    onNavigationEnd.subscribe(() => this.updateNav(this.activatedRoute));
   }
-
+  private updateNav(route: ActivatedRoute) {
+    if (route.component === IonicApp) {
+      if (!route.firstChild) {
+        return;
+      }
+      route = route.firstChild;
+      if (!this.nav.getActive() || this.nav.getActive().component !== route.component) {
+        this.nav.setRoot(route.component, route.params, { animate: true, direction: 'forward' });
+      }
+    }
+  }
 }

@@ -1,4 +1,4 @@
-# ngx-rocket-pwa
+# PWARnD
 
 Welcome to the project documentation!
 
